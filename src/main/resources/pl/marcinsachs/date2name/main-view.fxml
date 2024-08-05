@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox minHeight="500.0" minWidth="650.0" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.marcinsachs.date2name.Controller">
+  <children>
+    <MenuBar minWidth="650.0" VBox.vgrow="NEVER">
+      <menus>
+            <Menu mnemonicParsing="false" text="%settings">
+              <items>
+                  <Menu fx:id="languageMenu" mnemonicParsing="false" text="%language">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="English">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/us.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#languageSelector" text="Polski">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/pl.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#savePreference" text="%savePreferences" />
+              </items>
+            </Menu>
+        <Menu mnemonicParsing="false" text="%about" />
+      </menus>
+    </MenuBar>
+    <AnchorPane fx:id="root" maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Pane minHeight="30.0" prefHeight="30.0" prefWidth="450.0" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" layoutY="-1.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="640.0">
+                     <children>
+                        <Button fx:id="AddFileButton" mnemonicParsing="false" onAction="#fileSelector" text="%addFiles" />
+                        <Button mnemonicParsing="false" onAction="#onItemClick" text="%removeSelected">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Region prefHeight="30.0" HBox.hgrow="ALWAYS" />
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="%mode" textAlignment="RIGHT">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Label>
+                        <Label prefHeight="25.0" text=":">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <RadioButton fx:id="modeMove" alignment="CENTER_RIGHT" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="%modeMove" textAlignment="RIGHT">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="ModeGroup" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="modeCopy" alignment="CENTER_RIGHT" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" text="%modeCopy" textAlignment="RIGHT" toggleGroup="$ModeGroup">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="modeOverride" alignment="CENTER_RIGHT" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" text="%modeOverride" textAlignment="RIGHT" toggleGroup="$ModeGroup">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutY="49.0" prefHeight="17.0" prefWidth="640.0">
+                     <children>
+                        <Label text="%datePattern">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Label prefHeight="25.0" text=":">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="datePaternTextField" editable="false" prefHeight="25.0" prefWidth="230.0" text="yyyy-MM-dd-HH'h'mm'm'ss's'" />
+                        <Region prefHeight="30.0" HBox.hgrow="ALWAYS" />
+                        <Label prefHeight="25.0" text="%output" />
+                        <Label layoutX="70.0" layoutY="10.0" prefHeight="25.0" text=":">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="outputDirectory" prefHeight="25.0" prefWidth="165.0" />
+                        <Button fx:id="selectOutputDirectory" mnemonicParsing="false" onAction="#directorySelector" text="%select" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutY="70.0" prefHeight="30.0" prefWidth="640.0">
+                     <children>
+                        <Label fx:id="exampleName" text="%example">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" layoutY="145.0" prefHeight="30.0" prefWidth="640.0">
+                     <children>
+                        <Label text="%files">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label prefHeight="25.0" text=":" />
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+            <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="400.0" />
+            <Button fx:id="okButton" mnemonicParsing="false" onAction="#onOkButtonClick" text="%run" AnchorPane.bottomAnchor="12.0" AnchorPane.rightAnchor="200.0" />
+            <ListView fx:id="list" minHeight="150.0" prefHeight="230.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0" />
+            <Label fx:id="progressBarText" layoutX="256.0" layoutY="443.0" text="0%" />
+            <Label fx:id="version" layoutX="529.0" layoutY="442.0" text="v" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
